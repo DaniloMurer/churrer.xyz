@@ -26,7 +26,7 @@ jobs:
         condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
       - !BuildImageStep
         name: publish docker server image
-        buildPath: client/
+        buildPath: server/
         tags: git.churrer.xyz/churrer.xyz/house/house-server:@file:version.txt@
         publish: true
         removeDanglingImages: true
