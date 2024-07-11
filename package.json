@@ -1,0 +1,13 @@
+{
+  "name": "house",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "https://github.com/DaniloMurer/house.git",
+  "author": "Danilo Jakob <danilojakob@protonmail.com>",
+  "license": "MIT",
+  "workspaces": ["client/", "server"],
+  "scripts": {
+    "client:startdev": "yarn workspace client dev",
+    "server:startdev": "yarn workspace server start:dev"
+  }
+}
