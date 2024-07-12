@@ -13,23 +13,20 @@ jobs:
     runInContainer: true
     image: node:latest
     interpreter: !DefaultInterpreter
-      commands: |
-        npm pkg get version > version.txt
+      commands: npm pgk get version | tr -d \" > version.txt
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
     name: publish docker client image
-    buildPath: client/
-    tags: git.churrer.xyz/churrer.xyz/house/house:@file:version.txt@
-    publish: true
-    removeDanglingImages: true
+    buildContext: client/
+    output: !RegistryOutput
+      destinations: git.churrer.xyz/churrer.xyz/house/house:@file:version.txt@
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
     name: publish docker server image
-    buildPath: server/
-    tags: git.churrer.xyz/churrer.xyz/house/house-server:@file:version.txt@
-    publish: true
-    removeDanglingImages: true
+    buildContext: server/
+    output: !RegistryOutput
+      destinations: git.churrer.xyz/churrer.xyz/house/house-server:@file:version.txt@
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
