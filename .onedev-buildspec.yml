@@ -14,7 +14,7 @@ jobs:
     image: node:latest
     interpreter: !DefaultInterpreter
       commands: |
-        npm pkg get version | tr -d " > version.txt
+        npm pkg get version > version.txt
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
