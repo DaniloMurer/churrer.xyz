@@ -13,7 +13,8 @@ jobs:
     runInContainer: true
     image: node:latest
     interpreter: !DefaultInterpreter
-      commands: npm pgk get version | tr -d \" > version.txt
+      commands: |
+        npm pgk get version > version.txt
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
