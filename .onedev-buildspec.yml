@@ -1,41 +1,27 @@
-version: 25
+version: 35
 jobs:
-  - name: CI
-    steps:
-      - !CheckoutStep
-        name: checkout
-        cloneCredential: !DefaultCredential {}
-        withLfs: false
-        withSubmodules: true
-        condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-      - !CommandStep
-        name: version
-        runInContainer: true
-        image: node:latest
-        interpreter: !DefaultInterpreter
-          commands:
-            - jq -r '.version' package.json > version.txt
-        useTTY: false
-        condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-      - !BuildImageStep
-        name: publish docker client image
-        buildPath: client/
-        tags: git.churrer.xyz/churrer.xyz/house/house:@file:version.txt@
-        publish: true
-        removeDanglingImages: true
-        condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-      - !BuildImageStep
-        name: publish docker server image
-        buildPath: server/
-        tags: git.churrer.xyz/churrer.xyz/house/house-server:@file:version.txt@
-        publish: true
-        removeDanglingImages: true
-        condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-    triggers:
-      - !BranchUpdateTrigger
-        branches: main
-        projects: churrer.xyz/house
-    retryCondition: never
-    maxRetries: 3
-    retryDelay: 30
-    timeout: 3600
+- name: CI
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: version
+    runInContainer: true
+    image: node:latest
+    interpreter: !DefaultInterpreter
+      commands: |
+        jq -r '.version' package.json > version.txt
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: main
+    projects: churrer.xyz/house
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
