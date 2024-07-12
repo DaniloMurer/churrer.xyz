@@ -14,14 +14,14 @@ jobs:
     image: node:latest
     interpreter: !DefaultInterpreter
       commands: |
-        npm pgk get version > version.txt
+        echo 'test'
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
     name: publish docker client image
     buildContext: client/
     output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house:@file:version.txt@
+      destinations: git.churrer.xyz/churrer.xyz/house/house:0.1.0
     builtInRegistryAccessTokenSecret: registry-token
     moreOptions: --cache
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
@@ -29,7 +29,7 @@ jobs:
     name: publish docker server image
     buildContext: server/
     output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house-server:@file:version.txt@
+      destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.1.0
     builtInRegistryAccessTokenSecret: registry-token
     moreOptions: --cache
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
