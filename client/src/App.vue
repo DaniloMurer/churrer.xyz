@@ -3,8 +3,17 @@ import { ref } from 'vue';
 import NavBar from './components/NavBar.vue'
 
 const timelineItems = ref([
-  {title: 'Software Developer Apprentice', content: ['Developing and maintaining Java applications', 'ABAP and SAPUI5 development'], timestamp: '01.08.2018 - 01.08.2022'},
-  {title: 'Software Engineer',  content: ['Migrating existing apps to OpenShift Platform', 'Engineering and maintaining k8s DevOps infrastructure'], timestamp: '01.08.2022 - 31.07.2024'}
+  {title: 'Apprentice - Würth Itensis AG', content: [
+      'Developing and maintaining Java applications',
+      'ABAP and SAPUI5 development'
+    ], timestamp: '01.08.2018 - 01.08.2022'},
+  {title: 'Software Engineer - Würth Itensis AG',  content: [
+      'Migrating existing apps to OpenShift Platform',
+      'Engineering and maintaining k8s DevOps infrastructure',
+      'Developing and maintaining Java applications with Docker',
+      'Developing and maintaining SAPUI5 and ABAP applications',
+      'Requirements-Engineering with clients'
+    ], timestamp: '01.08.2022 - 31.07.2024'}
 ])
 
 </script>
@@ -12,30 +21,59 @@ const timelineItems = ref([
 <template>
   <div class="main-container">
     <NavBar style="height: inherit; grid-area: header" ></NavBar>
-    <div class="card-container">
-      <h2>Who even am I?</h2>
+    <div class="skills-container">
+      <h1>Skills</h1>
+      <div class="skills-item">
+        <p style="text-align: start;">Java</p>
+        <ProgressBar :value="100" style="flex-grow: 1"/>
+      </div>
+      <div class="skills-item">
+        <p style="text-align: start;">Docker</p>
+        <ProgressBar :value="100" style="flex-grow: 1"/>
+      </div>
+      <div class="skills-item">
+        <p style="text-align: start;">DevOps</p>
+        <ProgressBar :value="90" style="flex-grow: 1"/>
+      </div>
+      <div class="skills-item">
+        <p style="text-align: start; text-wrap: nowrap">Kubernetes</p>
+        <ProgressBar :value="80" style="flex-grow: 1"/>
+      </div>
+      <div class="skills-item">
+        <p style="text-align: start; text-wrap: nowrap">JavaScript / TypeScript</p>
+        <ProgressBar :value="80" style="flex-grow: 1"/>
+      </div>
+      <div class="skills-item">
+        <p style="text-align: start; text-wrap: nowrap">GitOps</p>
+        <ProgressBar :value="60" style="flex-grow: 1"/>
+      </div>
+    </div>
+    <div class="content-container">
+      <h1>Who even am I?</h1>
       <p>
         I'm a 22 years old software developer currently working at the Würth Itensis AG in Chur, Switzerland.
       </p>
-      <p>
+      <p style="text-align: start">
         Programming was a hobby of mine since back in my school days.
-        I especially like to challange myself in new technologies, frameworks or programming languages.
+        I especially like to challenge myself in new technologies, frameworks or programming languages.
       </p>
       <br>
-      <p>
+      <p style="text-align: start">
         I'm eager to learn new things about pretty much everything
         that software engineering has to offer. I don't back down from the unknown, and I hope this little website just
         shows you that.
       </p>
       <h2>Working Experience</h2>
-      <Timeline :value="timelineItems" align="alternate" style="margin-top: 70rem">
+    </div>
+    <div class="timeline-container">
+      <Timeline :value="timelineItems" align="alternate" style="width: inherit">
         <template #marker>
-          <span style="height: 2rem; width: 2rem; border-radius: 1rem; background-color: deeppink; display: flex; justify-content: center; align-items: center;">
+          <span style="height: 2rem; width: 2rem; border-radius: 1rem; background-color: #34d399; display: flex; justify-content: center; align-items: center;">
             <i class="pi pi-crown"></i>
           </span>
         </template>
         <template #content="slotProps">
-          <Card style="height: auto; margin-bottom: 5rem;" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+          <Card style="height: auto; margin-bottom: 5rem" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
             <template #title>
               {{ slotProps.item.title }}
             </template>
@@ -78,42 +116,41 @@ const timelineItems = ref([
 .animate-fadeout {
   animation: fade-out 1s ease-out;
 }
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-.card-container {
+.content-container {
   width: inherit;
   height: inherit;
   display: flex;
-  align-content: center;
+  align-items: start;
   flex-direction: column;
   grid-area: main;
 }
-.input-with-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.message-container {
-  position: absolute;
+.timeline-container {
   width: inherit;
   height: inherit;
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
   flex-direction: column;
-  align-items: end;
-  grid-area: sidebar;
-  padding: 1rem;
+  grid-area: timeline;
+  padding-top: 5rem;
+}
+.skills-container {
+  padding-left: 1rem;
+  padding-right: 3rem;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  grid-area: skills;
+}
+.skills-item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+  width: inherit;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .main-container {
@@ -121,22 +158,14 @@ const timelineItems = ref([
   width: 100%;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 10% 80% 10%;
+  grid-template-rows: 10% 40% 40% 10%;
   grid-template-areas:
     "header header header header"
-    ". main main ."
+    "skills main main ."
+    "skills timeline timeline ."
     "footer footer footer footer";
   padding: 0.25rem;
   position: relative;
-}
-.test-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  align-items: center;
-  grid-area: footer;
 }
 p {
   margin: 0;

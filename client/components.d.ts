@@ -15,6 +15,7 @@ declare module 'vue' {
     InputText: typeof import('primevue/inputtext')['default']
     Message: typeof import('primevue/message')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    ProgressBar: typeof import('primevue/progressbar')['default']
     Timeline: typeof import('primevue/timeline')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
   }

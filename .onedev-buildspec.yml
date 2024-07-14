@@ -8,20 +8,11 @@ jobs:
     withLfs: false
     withSubmodules: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: version
-    runInContainer: true
-    image: node:latest
-    interpreter: !DefaultInterpreter
-      commands: |
-        echo 'test'
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
     name: publish docker client image
     buildContext: client/
     output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house:0.1.0
+      destinations: git.churrer.xyz/churrer.xyz/house/house:0.2.0
     builtInRegistryAccessTokenSecret: registry-token
     moreOptions: --single-snapshot
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
@@ -29,7 +20,7 @@ jobs:
     name: publish docker server image
     buildContext: server/
     output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.1.0
+      destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.2.0
     builtInRegistryAccessTokenSecret: registry-token
     moreOptions: --single-snapshot
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
