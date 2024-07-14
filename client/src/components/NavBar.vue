@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {useVisibleStore} from "../store/visible.ts";
 
-const visibleStore = useVisibleStore();
 </script>
 
 <template>
