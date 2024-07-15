@@ -1,4 +1,4 @@
-FROM node:22.3.0 as builder
+FROM node:22.3.0-alpine
 
 WORKDIR /app/server
 
@@ -7,7 +7,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-FROM node:22.3.0-alpine
-COPY --from=builder /app/server ./
+#FROM node:22.3.0-alpine
+#COPY --from=builder /app/server ./
 
 CMD ["npm", "run", "start:prod"]
