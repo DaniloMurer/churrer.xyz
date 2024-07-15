@@ -14,7 +14,7 @@ jobs:
     output: !RegistryOutput
       destinations: git.churrer.xyz/churrer.xyz/house/house:0.2.0
     builtInRegistryAccessTokenSecret: registry-token
-    moreOptions: --use-new-run
+    moreOptions: --use-new-run --snapshotMode=redo
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !BuildImageWithKanikoStep
     name: publish docker server image
@@ -22,7 +22,7 @@ jobs:
     output: !RegistryOutput
       destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.2.0
     builtInRegistryAccessTokenSecret: registry-token
-    moreOptions: --use-new-run
+    moreOptions: --use-new-run --snapshotMode=redo
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
