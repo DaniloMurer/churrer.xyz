@@ -12,18 +12,18 @@ jobs:
     name: publish docker client image
     buildContext: client/
     output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house:0.2.0
+      destinations: git.churrer.xyz/churrer.xyz/house/house:0.3.0
     builtInRegistryAccessTokenSecret: registry-token
     moreOptions: --single-snapshot
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !BuildImageWithKanikoStep
-    name: publish docker server image
-    buildContext: server/
-    output: !RegistryOutput
-      destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.2.0
-    builtInRegistryAccessTokenSecret: registry-token
-    moreOptions: --single-snapshot
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+#  - !BuildImageWithKanikoStep
+#    name: publish docker server image
+#    buildContext: server/
+#    output: !RegistryOutput
+#      destinations: git.churrer.xyz/churrer.xyz/house/house-server:0.3.0
+#    builtInRegistryAccessTokenSecret: registry-token
+#    moreOptions: --single-snapshot
+#    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
     branches: main
