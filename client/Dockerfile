@@ -4,14 +4,12 @@ ENV NODE_ENV=production
 
 WORKDIR /src
 
-# get my bad boy yarn for building
-RUN npm install yarn
 
 FROM base as build
 EXPOSE 3000
 COPY . .
-RUN yarn install --production=false
-RUN yarn run build
+RUN npm install --production=false
+RUN npm run build
 FROM base
 
 ENV PORT=$PORT
