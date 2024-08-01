@@ -10,8 +10,8 @@ EXPOSE 3000
 COPY . .
 RUN npm install --production=false
 RUN npm run build
-FROM base
 
+FROM base
 ENV PORT=$PORT
 
 COPY --from=build /src/.output /src/.output

@@ -4,7 +4,7 @@
 
 <template>
   <div class="flex flex-col items-center gap-16">
-    <Hero class="animate-bounce-slow hover:animate-none"/>
+    <Hero/>
     <div class="divider">Technologies</div>
     <Technologies/>
     <div class="divider">Experience</div>
