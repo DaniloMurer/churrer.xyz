@@ -1,12 +1,13 @@
 package xyz.churrer.house.resource;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import xyz.churrer.house.domain.jpa.Telemetry;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import xyz.churrer.house.domain.dto.TelemetryDto;
 import xyz.churrer.house.service.TelemetryService;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/api/telemetry")
 public class TelemetryResource {
@@ -15,9 +16,14 @@ public class TelemetryResource {
     TelemetryService telemetryService;
 
     @POST
-    public String mockData() {
-        var telemetry = new Telemetry("", "", LocalDateTime.now());
-        this.telemetryService.persist(telemetry);
-        return "";
+    public String create(TelemetryDto telemetry) {
+        this.telemetryService.persist(telemetry.toTelemetry());
+        return telemetry.toString();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TelemetryDto> getAll() {
+        return this.telemetryService.findAll().stream().map(TelemetryDto::fromTelemetry).collect(Collectors.toList());
     }
 }
