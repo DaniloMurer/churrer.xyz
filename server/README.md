@@ -1,4 +1,4 @@
-# code-with-quarkus
+# churrer.xyz-backend
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
