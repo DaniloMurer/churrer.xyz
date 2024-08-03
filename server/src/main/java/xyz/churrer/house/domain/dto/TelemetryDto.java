@@ -28,11 +28,6 @@ public class TelemetryDto {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("TelemetryDto{");
-        sb.append("countryName='").append(countryName).append('\'');
-        sb.append(", countryIso='").append(countryIso).append('\'');
-        sb.append(", timestamp=").append(timestamp);
-        sb.append('}');
-        return sb.toString();
+        return String.format("TelemetryDto{countryName='%s', countryIso='%s', timestamp=%s}", countryName, countryIso, timestamp);
     }
 }

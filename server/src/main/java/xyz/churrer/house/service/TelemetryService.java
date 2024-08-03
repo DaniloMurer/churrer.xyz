@@ -1,7 +1,6 @@
 package xyz.churrer.house.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import xyz.churrer.house.domain.jpa.Telemetry;
@@ -10,8 +9,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class TelemetryService {
-    @Inject
-    EntityManager em;
+
+    private final EntityManager em;
+
+    public TelemetryService(EntityManager em) {
+        this.em = em;
+    }
 
     @Transactional
     public void persist(Telemetry telemetry) {
