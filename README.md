@@ -11,6 +11,10 @@ yarn install
 # start nuxt frontend
 yarn client:startdev
 ```
+> [!WARNING]
+> `yarn install` and workspaces only work correctly in linux / macos. On windows this doesn't work.<br>
+> it's a known [issue](https://github.com/yarnpkg/yarn/issues/4564) in yarn
+
 for more nuxt stuff refer to [the client readme](./client/README.md)
 
 ### Backend
