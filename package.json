@@ -1,8 +1,8 @@
 {
   "name": "house",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "private": true,
-  "repository": "https://github.com/DaniloMurer/house.git",
+  "repository": "https://github.com/DaniloMurer/churrer.xyz.git",
   "author": "Danilo Jakob <danilojakob@protonmail.com>",
   "license": "MIT",
   "workspaces": [
