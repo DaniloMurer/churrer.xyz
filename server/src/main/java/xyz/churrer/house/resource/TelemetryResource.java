@@ -6,6 +6,9 @@ import xyz.churrer.house.domain.dto.TelemetryDto;
 import xyz.churrer.house.service.TelemetryService;
 import java.util.List;
 
+/**
+ * Resource controller for telemetry
+ */
 @Path("/api/telemetry")
 public class TelemetryResource {
 
@@ -16,6 +19,7 @@ public class TelemetryResource {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     public String create(TelemetryDto telemetry) {
         this.telemetryService.persist(telemetry.toTelemetry());
         return telemetry.toString();

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * JPA entity class for telemetry
+ */
 @Data
 @NoArgsConstructor
 @Entity
