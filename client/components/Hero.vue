@@ -20,10 +20,7 @@
         <span class="iconify carbon--email text-2xl text-accent"/><a class="link-accent" href="mailto:danilojakob@protonmail.com">danilojakob@protonmail.com</a>
       </p>
       <p class="py-6 flex gap-3 content-center">
-        <span class="iconify logos--github-icon text-accent w-6 h-6"/><a class="link-accent" href="https://github.com/DaniloMurer">See my (outdated) work</a>
-      </p>
-      <p class="py-6 flex gap-3 content-center">
-        <span class="iconify logos--git-icon text-accent w-6 h-6"/><a class="link-accent" href="https://git.churrer.xyz/">See my work</a>
+        <span class="iconify logos--github-icon text-accent w-6 h-6"/><a class="link-accent" href="https://github.com/DaniloMurer">See my work</a>
       </p>
     </div>
   </div>
