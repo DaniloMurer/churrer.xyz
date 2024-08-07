@@ -41,7 +41,7 @@
           'countryName': whois.country,
           'countryIso': whois.countryIso,
           //we split at '.' so the Z part of the ISO string gets truncated, for quarkus and hibernate reasons
-          'timestamp': new Date().toISOString().split('.')[0]
+          'timestamp': new Date().toISOString()
         }
       }).then((error) => {
         console.error('Something went wrong. check backend logs....', error);
