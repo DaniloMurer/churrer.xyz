@@ -12,9 +12,6 @@ func main() {
         return
     }
 	router := gin.Default()
-	router.GET("/", controller.GetPeople)
-    router.POST("/", controller.CreatePerson)
-
     router.GET("/api/telemetry", controller.GetTelemetries)
     router.POST("/api/telemetry", controller.CreateTelemetry)
     err := router.Run("localhost:8080")

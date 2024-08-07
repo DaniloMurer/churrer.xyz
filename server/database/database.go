@@ -26,15 +26,7 @@ func openDatabaseConnection() {
 // AutoMigration migrates the schema defined in the data package to the database
 func AutoMigration() error {
 	openDatabaseConnection()
-	return database.AutoMigrate(&data.Person{}, &data.Telemetry{})
-}
-
-// GetAllPerson returns all people from the database
-func GetAllPerson() []data.Person {
-	logger.Println("Retrieving all people")
-    var people []data.Person
-	database.Find(&people)
-	return people
+	return database.AutoMigrate(&data.Telemetry{})
 }
 
 // GetAllTelemetry returns all telemetries from the database
@@ -49,10 +41,4 @@ func GetAllTelemetry() []data.Telemetry {
 func CreateTelemetry(telemetry *data.Telemetry) {
 	logger.Println("Creating new telemetry entry")
 	database.Create(telemetry)
-}
-
-// CreatePerson creates new data.Person entry in database
-func CreatePerson(person *data.Person) {
-	logger.Printf("Creating Person: {%v %v}", person.FirstName, person.LastName)
-	database.Create(person)
 }

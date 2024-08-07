@@ -30,21 +30,3 @@ type TelemetryDto struct {
 func (dto TelemetryDto) ToTelemetry() *Telemetry {
 	return &Telemetry{CountryName: dto.CountryName, CountryISO: dto.CountryISO, TimeStamp: dto.TimeStamp}
 }
-
-// Person is a database model
-type Person struct {
-	Model
-	FirstName string `json:"firstName"`
-	LastName string `json:"lastName"`
-}
-
-// PersonDto is a dto model for the Person database model
-type PersonDto struct {
-	FirstName string `json:"firstName"`
-	LastName string `json:"lastName"`
-}
-
-// ToPerson converts a PersonDto model to a Person database model
-func (dto PersonDto) ToPerson() *Person {
-	return &Person{FirstName: dto.FirstName, LastName: dto.LastName}
-}
