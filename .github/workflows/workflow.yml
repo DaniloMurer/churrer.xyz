@@ -3,8 +3,6 @@ name: building churrer.xyz
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build:
@@ -25,6 +23,12 @@ jobs:
 
       - name: publish client docker image
         run: docker push ghcr.io/danilomurer/churrer.xyz:${{ steps.version.outputs.current_version }}
+
+      - name: build server docker image
+        run: docker build ./server/ --tag ghcr.io/danilomurer/churrer.xyz-server:${{ steps.version.outputs.current_version }}
+
+      - name: publish server docker image
+        run: docker push ghcr.io/danilomurer/churrer.xyz-server:${{ steps.version.outputs.current_version }}
 
 
 

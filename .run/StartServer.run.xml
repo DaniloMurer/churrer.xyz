@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="StartServer" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="churrer.xyz" />
+    <working_directory value="$PROJECT_DIR$/server" />
+    <envs>
+      <env name="DB_CONNECTION" value="host=localhost user=postgres password=gorm dbname=gorm port=5432 sslmode=disable TimeZone=Europe/Zurich" />
+    </envs>
+    <kind value="FILE" />
+    <package value="server" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/server/main.go" />
+    <method v="2" />
+  </configuration>
+</component>
