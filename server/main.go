@@ -12,8 +12,11 @@ func main() {
 		return
 	}
 	router := gin.Default()
-	router.GET("/api/telemetry", controller.GetTelemetries)
-	router.POST("/api/telemetry", controller.CreateTelemetry)
+	api := router.Group("/api")
+	{
+		api.GET("/telemetry", controller.GetTelemetries)
+		api.POST("/telemetry", controller.CreateTelemetry)
+	}
 	err := router.Run("localhost:8080")
 	if err != nil {
 		panic("we're fucked")
