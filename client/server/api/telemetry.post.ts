@@ -4,8 +4,9 @@ import {readBody} from "#imports";
  * Handle call to backend for telemetry from client (BFF principle)
  */
 export default defineEventHandler(async (event) => {
+	const apiHost = process.env.API_HOST || 'http://localhost:8080';
 	const body = await readBody(event);
-	$fetch('http://localhost:8080/api/telemetry', {
+	$fetch(`${apiHost}/api/telemetry`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
