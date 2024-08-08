@@ -17,7 +17,7 @@ func main() {
 		api.GET("/telemetry", controller.GetTelemetries)
 		api.POST("/telemetry", controller.CreateTelemetry)
 	}
-	err := router.Run("localhost:8080")
+	err := router.Run("0.0.0.0:8080")
 	if err != nil {
 		panic("we're fucked")
 	}
