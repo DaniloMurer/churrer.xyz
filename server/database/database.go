@@ -8,7 +8,7 @@ import (
 	"server/data"
 )
 
-var connectionString = "host=localhost user=postgres password=gorm dbname=gorm port=5432 sslmode=disable TimeZone=Europe/Zurich"
+var connectionString = os.Getenv("DB_CONNECTION")
 var database *gorm.DB
 
 var logger = log.New(os.Stdout, "[XYZ] - ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
