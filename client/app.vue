@@ -3,7 +3,7 @@
     <div class="navbar bg-gray-800 rounded-2xl shadow-2xl">
       <a class="btn btn-ghost text-xl">churrer.xyz</a>
     </div>
-    <NuxtRouteAnnouncer />
+    <NuxtRouteAnnouncer/>
     <NuxtPage/>
   </div>
 </template>
