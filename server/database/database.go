@@ -26,7 +26,7 @@ func openDatabaseConnection() {
 // AutoMigration migrates the schema defined in the data package to the database
 func AutoMigration() error {
 	openDatabaseConnection()
-	return database.AutoMigrate(&data.Telemetry{})
+	return database.AutoMigrate(&data.Telemetry{}, &data.Experience{})
 }
 
 // GetAllTelemetry returns all telemetries from the database
@@ -41,4 +41,18 @@ func GetAllTelemetry() []data.Telemetry {
 func CreateTelemetry(telemetry *data.Telemetry) {
 	logger.Println("Creating new telemetry entry")
 	database.Create(telemetry)
+}
+
+// GetAllExperience returns all experiences from the database
+func GetAllExperience() []data.Experience {
+	logger.Println("Retrieving all experiences")
+	var experiences []data.Experience
+	database.Find(&experiences)
+	return experiences
+}
+
+// CreateExperience created new data.Experience entry in database
+func CreateExperience(experience *data.Experience) {
+	logger.Println("Creating new experience entry")
+	database.Create(experience)
 }

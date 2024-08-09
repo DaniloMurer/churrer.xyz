@@ -16,6 +16,9 @@ func main() {
 	{
 		api.GET("/telemetry", controller.GetTelemetries)
 		api.POST("/telemetry", controller.CreateTelemetry)
+
+		api.GET("/experience", controller.GetExperiences)
+		api.POST("/experience", controller.CreateExperience)
 	}
 	err := router.Run("0.0.0.0:8080")
 	if err != nil {

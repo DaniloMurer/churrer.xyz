@@ -23,3 +23,20 @@ func CreateTelemetry(c *gin.Context) {
 		c.JSON(http.StatusCreated, newTelemetry)
 	}
 }
+
+// GetExperiences handles the get request to retrieve all experiences
+func GetExperiences(c *gin.Context) {
+	experiences := database.GetAllExperience()
+	c.JSON(http.StatusOK, experiences)
+}
+
+// CreateExperience handles a post request to create a new experience
+func CreateExperience(c *gin.Context) {
+	var newExperience data.ExperienceDto
+	if err := c.BindJSON(&newExperience); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err})
+	} else {
+		database.CreateExperience(newExperience.ToExperience())
+		c.JSON(http.StatusCreated, newExperience)
+	}
+}
