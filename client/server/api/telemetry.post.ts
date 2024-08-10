@@ -4,7 +4,7 @@ import {base64urlEncode} from "iron-webcrypto";
 /**
  * Handle call to backend for telemetry from client (BFF principle)
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event) : Promise<void> => {
 	const apiHost = process.env.API_HOST || 'http://localhost:8080';
 	const apiUsername = process.env.API_USERNAME || 'admin';
 	const apiPassword = process.env.API_PASSWORD || 'testico';
