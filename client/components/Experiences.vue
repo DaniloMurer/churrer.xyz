@@ -1,33 +1,37 @@
 <script setup lang="ts">
+let experiences = ref([])
 
+onMounted(() => {
+	$fetch('/api/experience', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
+		}
+	}).then((data: []) => {
+		experiences.value = data;
+		console.log(experiences)
+	}).catch((err) => {
+		console.error('Something went wrong. check backend logs....', err);
+	})
+})
 </script>
 
 <template>
 	<ul class="timeline timeline-vertical timeline-snap-icon">
-		<li>
-			<div class="timeline-start mb-10">
-				<WorkCard class="lg:mr-10" data-aos="fade-right" data-aos-duration="1000" title="Apprentice"
-						  company="Würth ITensis" timeframe="01.08.2018 - 31.07.2022" text="Developing as well as maintaining Java applications
-      and ABAP / SAPUI5 development"/>
-			</div>
-			<div class="timeline-middle">
-				<span class="iconify carbon--time text-xl"></span>
-			</div>
-			<hr/>
-		</li>
-		<li>
-			<div class="timeline-end mb-10">
-				<WorkCard class="lg:ml-10"
-						  data-aos="fade-left"
+		<li v-for="(experience, index) in experiences">
+			<div class="mb-10" :class="index % 2 == 0 ? 'timeline-start' : 'timeline-end'">
+				<WorkCard :class="index % 2 == 0 ? 'lg:mr-10' : 'lg:ml-10'"
+						  :data-aos="index % 2 == 0 ? 'fade-right' : 'fade-left'"
 						  data-aos-duration="1000"
-						  title="Junior Software Engineer"
-						  company="Würth ITensis"
-						  timeframe="01.08.2022 - Current"
-						  text="Migrating existing apps to OpenShift Platform. Engineering and maintaining k8s DevOps infrastructure. Developing and maintaining Java applications with Docker. Developing and maintaining SAPUI5 and ABAP applications. Requirements-Engineering with clients"/>
+						  :title="experience.position"
+						  :company="experience.company" :timeframe="experience.timeFrame"
+						  :text="experience.responsibilities"/>
 			</div>
 			<div class="timeline-middle">
 				<span class="iconify carbon--time text-xl"></span>
 			</div>
+			<hr v-if="index % 2 == 0"/>
 		</li>
 	</ul>
 </template>
