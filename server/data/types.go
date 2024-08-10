@@ -63,3 +63,30 @@ func (dto ExperienceDto) ToExperience() *Experience {
 		Responsibilities: dto.Responsibilities,
 	}
 }
+
+// Technology represents a database model for known technologies
+type Technology struct {
+	Model
+	Name        string `json:"name"`
+	Experience  string `json:"experience"`
+	Description string `json:"description"`
+	LogoClass   string `json:"logoClass"`
+}
+
+// TechnologyDto represents a data transfer object for known technology.
+type TechnologyDto struct {
+	Name        string `json:"name"`
+	Experience  string `json:"experience"`
+	Description string `json:"description"`
+	LogoClass   string `json:"logoClass"`
+}
+
+// ToTechnology converts an TechnologyDto model to an Technology database model
+func (dto TechnologyDto) ToTechnology() *Technology {
+	return &Technology{
+		Name:        dto.Name,
+		Experience:  dto.Experience,
+		Description: dto.Description,
+		LogoClass:   dto.LogoClass,
+	}
+}

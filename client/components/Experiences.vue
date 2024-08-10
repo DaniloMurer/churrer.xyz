@@ -2,13 +2,12 @@
 let experiences = ref([])
 
 onMounted(() => {
-	$fetch('/api/experience', {
+	$fetch('/api/experiences', {
 		method: 'GET',
 		headers: {
-			'Content-Type': 'application/json',
 			'Accept': 'application/json',
 		}
-	}).then((data: []) => {
+	}).then((data: any) => {
 		experiences.value = data;
 		console.log(experiences)
 	}).catch((err) => {
@@ -31,6 +30,7 @@ onMounted(() => {
 			<div class="timeline-middle">
 				<span class="iconify carbon--time text-xl"></span>
 			</div>
+			<!--	fixme: https://github.com/DaniloMurer/churrer.xyz/issues/8		-->
 			<hr v-if="index % 2 == 0"/>
 		</li>
 	</ul>
