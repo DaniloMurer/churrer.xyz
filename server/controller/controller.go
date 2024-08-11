@@ -28,6 +28,29 @@ func Authorize(username string, password string, ok bool) (bool, error) {
 	return true, nil
 }
 
+// AuthenticateUser handles the post request to authenticate a login request
+func AuthenticateUser(c *gin.Context) {
+	var user data.UserDto
+	if err := c.BindJSON(&user); err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"message": err})
+		return
+	}
+	authorized, err := Authorize(user.Username, user.Password, true)
+	if err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		return
+	}
+	if !authorized {
+		logger.Println("WARN: Attempted login with wrong credentials")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		return
+	}
+	user.CreateToken()
+	c.JSON(http.StatusAccepted, user)
+}
+
 // GetTelemetries handles the get request to retrieve all telemetries
 func GetTelemetries(c *gin.Context) {
 	telemetries := database.GetAllTelemetry()

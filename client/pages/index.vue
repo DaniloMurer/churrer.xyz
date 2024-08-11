@@ -9,23 +9,7 @@ onMounted(async () => {
 		console.log('sending data')
 		sendMetricsData();
 	}
-	// console.log(await getExperiences());
 })
-
-// /**
-//  * Retrieves experiences from the server.
-//  *
-//  * @returns {Promise} A Promise that resolves with the fetched experiences from the server.
-//  */
-// const getExperiences = function () {
-// 	return $fetch('/api/experience', {
-// 		method: 'GET',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 			'Accept': 'application/json',
-// 		}
-// 	})
-// }
 
 /**
  * set metric policy in localStorage, based on that the alert is not shown in future visits of the site.

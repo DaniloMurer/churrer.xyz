@@ -22,6 +22,8 @@ func main() {
 
 		api.GET("/technology", controller.GetTechnologies)
 		api.POST("/technology", controller.CreateTechnology)
+
+		api.POST("/authentication", controller.AuthenticateUser)
 	}
 	err := router.Run("0.0.0.0:8080")
 	if err != nil {

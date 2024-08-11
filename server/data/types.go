@@ -1,6 +1,7 @@
 package data
 
 import (
+	"encoding/base64"
 	"gorm.io/gorm"
 	"time"
 )
@@ -89,4 +90,16 @@ func (dto TechnologyDto) ToTechnology() *Technology {
 		Description: dto.Description,
 		LogoClass:   dto.LogoClass,
 	}
+}
+
+// UserDto represents a data transfer object of a login request
+type UserDto struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Token    string `json:"token"`
+}
+
+// CreateToken generates an authentication token by encoding the username and password and fills the Token field
+func (dto *UserDto) CreateToken() {
+	dto.Token = base64.StdEncoding.EncodeToString([]byte(dto.Username + ":" + dto.Password))
 }
