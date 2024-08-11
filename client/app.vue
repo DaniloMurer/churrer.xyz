@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const username = ref("")
-const password = ref("")
+const username = ref('');
+const password = ref('');
 const login = function() {
 	const requestBody  = {
 		username: username.value,
@@ -16,8 +16,11 @@ const login = function() {
 		body: JSON.stringify(requestBody)
 	}).then((data: any) => {
 		localStorage.setItem('token', data.token)
-		document.getElementById('loginModal').close();
-		navigateTo('/admin')
+		const loginModal = document.getElementById('loginModal');
+		if (loginModal) {
+			loginModal.close();
+			navigateTo('/admin')
+		}
 	}).catch(err => {
 		console.error(err)
 	})
