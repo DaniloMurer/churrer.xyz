@@ -25,15 +25,20 @@ const login = function() {
 		console.error(err)
 	})
 }
+
+onMounted(() => {
+	window.addEventListener('keydown', (e) => {
+		if (e.ctrlKey && e.altKey && e.key === 'l') {
+			document.getElementById('loginModal').showModal();
+		}
+	})
+})
 </script>
 <template>
 	<div class="p-3 flex flex-col h-lvh gap-16">
 		<div class="navbar bg-gray-800 rounded-2xl shadow-2xl">
 			<div class="flex-1">
 				<a class="btn btn-ghost text-xl" href="/">churrer.xyz</a>
-			</div>
-			<div class="flex-none">
-				<a class="btn btn-ghost text-xl" onclick="loginModal.showModal()">admin</a>
 			</div>
 		</div>
 		<dialog id="loginModal" class="modal">
