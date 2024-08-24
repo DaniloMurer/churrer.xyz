@@ -14,7 +14,7 @@ module.exports = {
 		"logos--kubernetes"
 	],
 	daisyui: {
-		themes: ['night']
+		themes: ['night', 'winter']
 	},
 	theme: {
 		extend: {
