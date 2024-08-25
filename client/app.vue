@@ -28,7 +28,7 @@ const login = function() {
 }
 
 const toggleTheme = function() {
-	console.log(isWhite.value)
+	isWhite.value = !isWhite.value;
 	localStorage.setItem("isWhite", String(isWhite.value));
 }
 
@@ -38,12 +38,7 @@ onMounted(() => {
 			document.getElementById('loginModal').showModal();
 		}
 	});
-	console.log("white")
-	const isWhiteLocalStorage = localStorage.getItem("isWhite");
-	if (isWhiteLocalStorage) {
-		isWhite.value = Boolean(isWhiteLocalStorage);
-	}
-})
+});
 </script>
 <template>
 	<div class="p-3 flex flex-col h-lvh gap-16">
