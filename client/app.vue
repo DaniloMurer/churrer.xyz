@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import {useThemeStore} from '~/store/theme';
+
 const username = ref('');
 const password = ref('');
+const isWhite = ref(false);
 const login = function() {
 	const requestBody  = {
 		username: username.value,
@@ -26,19 +29,36 @@ const login = function() {
 	})
 }
 
+const toggleTheme = function() {
+	localStorage.setItem("isWhite", String(!isWhite.value));
+	useThemeStore().$patch({isWhite: !isWhite.value});
+}
+
 onMounted(() => {
 	window.addEventListener('keydown', (e) => {
 		if (e.ctrlKey && e.altKey && e.key === 'l') {
 			document.getElementById('loginModal').showModal();
 		}
-	})
-})
+	});
+	isWhite.value = localStorage.getItem("isWhite") === 'true';
+	useThemeStore().$subscribe((mutation, state) => {
+		isWhite.value = state.isWhite;
+	});
+});
 </script>
 <template>
 	<div class="p-3 flex flex-col h-lvh gap-16">
-		<div class="navbar bg-gray-800 rounded-2xl shadow-2xl">
+		<div class="navbar bg-base-300 rounded-2xl shadow-2xl">
 			<div class="flex-1">
 				<a class="btn btn-ghost text-xl" href="/">churrer.xyz</a>
+				<a class="btn btn-ghost text-xl" href="/about">about this site</a>
+			</div>
+			<div class="flex-none p-5">
+				<label class="flex cursor-pointer gap-2">
+					<span class="label-text">Dark</span>
+					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme" class="toggle theme-controller"/>
+					<span class="label-text">Light</span>
+				</label>
 			</div>
 		</div>
 		<dialog id="loginModal" class="modal">

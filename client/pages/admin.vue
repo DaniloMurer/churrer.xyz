@@ -13,7 +13,7 @@ const technology = ref({
 	logoClass: ''
 });
 
-let authenticationToken = '';
+let authenticationToken: string | null = '';
 
 onMounted(() => {
 	authenticationToken = localStorage.getItem("token");

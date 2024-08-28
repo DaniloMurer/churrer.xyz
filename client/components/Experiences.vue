@@ -1,5 +1,11 @@
 <script setup lang="ts">
-let experiences = ref([])
+interface Experience {
+	position: string;
+	company: string;
+	timeFrame: string;
+	responsibilities: string;
+}
+const experiences = ref<Experience[]>([]);
 
 onMounted(() => {
 	$fetch('/api/experiences', {

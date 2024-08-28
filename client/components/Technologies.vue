@@ -1,6 +1,11 @@
 <script setup lang="ts">
-
-let technologies = ref([])
+interface Technology {
+	name: string;
+	logoClass: string;
+	experience: string;
+	description: string;
+}
+const technologies = ref<Technology[]>([]);
 
 $fetch('/api/technologies', {
 	method: 'GET',
