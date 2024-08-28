@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {useThemeStore} from '~/store/theme';
+
 const username = ref('');
 const password = ref('');
 const isWhite = ref(false);
@@ -28,8 +30,8 @@ const login = function() {
 }
 
 const toggleTheme = function() {
-	isWhite.value = !isWhite.value;
-	localStorage.setItem("isWhite", String(isWhite.value));
+	localStorage.setItem("isWhite", String(!isWhite.value));
+	useThemeStore().$patch({isWhite: !isWhite.value});
 }
 
 onMounted(() => {
@@ -37,6 +39,10 @@ onMounted(() => {
 		if (e.ctrlKey && e.altKey && e.key === 'l') {
 			document.getElementById('loginModal').showModal();
 		}
+	});
+	isWhite.value = localStorage.getItem("isWhite") === 'true';
+	useThemeStore().$subscribe((mutation, state) => {
+		isWhite.value = state.isWhite;
 	});
 });
 </script>

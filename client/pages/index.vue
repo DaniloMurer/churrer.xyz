@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const showTelemetryAlert = ref(false)
 
-console.log(process.env);
-
 onMounted(async () => {
 	const hasMetricsPolicySet = localStorage.getItem('metricsPolicy');
 	showTelemetryAlert.value = !hasMetricsPolicySet;
