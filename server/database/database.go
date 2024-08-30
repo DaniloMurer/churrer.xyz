@@ -70,3 +70,14 @@ func CreateTechnology(technology *data.Technology) {
 	logger.Println("Creating new technology entry")
 	database.Create(technology)
 }
+
+func DeleteExperience(id uint) {
+	logger.Println("Deleting experience entry")
+	database.Delete(&data.Experience{}, id)
+}
+
+func UpdateExperience(experience *data.Experience) {
+	logger.Println("Updating experience entry")
+	database.Save(experience)
+
+}

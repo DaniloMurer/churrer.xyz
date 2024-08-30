@@ -19,6 +19,8 @@ func main() {
 
 		api.GET("/experience", controller.GetExperiences)
 		api.POST("/experience", controller.CreateExperience)
+		api.DELETE("/experience/:id", controller.DeleteExperience)
+		api.PUT("/experience", controller.UpdateExperience)
 
 		api.GET("/technology", controller.GetTechnologies)
 		api.POST("/technology", controller.CreateTechnology)

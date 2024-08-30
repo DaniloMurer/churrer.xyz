@@ -8,6 +8,7 @@ import (
 	"os"
 	"server/data"
 	"server/database"
+	"strconv"
 )
 
 var adminUsername = os.Getenv("ADMIN_USERNAME")
@@ -39,7 +40,7 @@ func AuthenticateUser(c *gin.Context) {
 	authorized, err := Authorize(user.Username, user.Password, true)
 	if err != nil {
 		logger.Printf("ERROR: %+v\n", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
@@ -62,7 +63,7 @@ func CreateTelemetry(c *gin.Context) {
 	var newTelemetry data.TelemetryDto
 	if err := c.BindJSON(&newTelemetry); err != nil {
 		logger.Printf("ERROR: %+v\n", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	database.CreateTelemetry(newTelemetry.ToTelemetry())
@@ -80,7 +81,7 @@ func CreateExperience(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
 		logger.Printf("ERROR: %+v\n", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
@@ -126,4 +127,52 @@ func CreateTechnology(c *gin.Context) {
 	}
 	database.CreateTechnology(newTechnology.ToTechnology())
 	c.JSON(http.StatusCreated, newTechnology)
+}
+
+func DeleteExperience(c *gin.Context) {
+	authorized, err := Authorize(c.Request.BasicAuth())
+	if err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	if !authorized {
+		logger.Println("WARN: Attempted login with wrong credentials")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		return
+	}
+	experienceId := c.Param("id")
+
+	//convert experienceId to int
+	if convertedId, err := strconv.Atoi(experienceId); err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Provided id not a valid integer"})
+	} else {
+		database.DeleteExperience(uint(convertedId))
+		c.JSON(http.StatusOK, gin.H{"message": "Experience deleted"})
+	}
+}
+
+func UpdateExperience(c *gin.Context) {
+	authorized, err := Authorize(c.Request.BasicAuth())
+	if err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	if !authorized {
+		logger.Println("WARN: Attempted login with wrong credentials")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		return
+	}
+
+	var experience data.ExperienceDto
+	if err := c.BindJSON(&experience); err != nil {
+		logger.Printf("ERROR: %+v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	database.UpdateExperience(experience.ToExperience())
+	c.JSON(http.StatusOK, gin.H{"message": experience})
 }
