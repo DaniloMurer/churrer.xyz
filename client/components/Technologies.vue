@@ -1,10 +1,4 @@
 <script setup lang="ts">
-interface Technology {
-	name: string;
-	logoClass: string;
-	experience: string;
-	description: string;
-}
 const technologies = ref<Technology[]>([]);
 
 $fetch('/api/technologies', {

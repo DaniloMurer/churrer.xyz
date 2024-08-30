@@ -1,10 +1,4 @@
 <script setup lang="ts">
-interface Experience {
-	position: string;
-	company: string;
-	timeFrame: string;
-	responsibilities: string;
-}
 const experiences = ref<Experience[]>([]);
 
 onMounted(() => {

@@ -36,7 +36,7 @@ const toggleTheme = function() {
 
 onMounted(() => {
 	window.addEventListener('keydown', (e) => {
-		if (e.ctrlKey && e.altKey && e.key === 'l') {
+		if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'L') {
 			document.getElementById('loginModal').showModal();
 		}
 	});
@@ -50,8 +50,8 @@ onMounted(() => {
 	<div class="p-3 flex flex-col h-lvh gap-16">
 		<div class="navbar bg-base-300 rounded-2xl shadow-2xl">
 			<div class="flex-1">
-				<a class="btn btn-ghost text-xl" href="/">churrer.xyz</a>
-				<a class="btn btn-ghost text-xl" href="/about">about this site</a>
+				<NuxtLink class="btn btn-ghost text-xl" to="/">churrer.xyz</NuxtLink>
+				<NuxtLink class="btn btn-ghost text-xl" to="/about">about this site</NuxtLink>
 			</div>
 			<div class="flex-none p-5">
 				<label class="flex cursor-pointer gap-2">
