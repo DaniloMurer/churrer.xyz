@@ -62,10 +62,10 @@ onMounted(() => {
 				<NuxtLink class="btn btn-ghost text-xl" to="/about">about this site</NuxtLink>
 			</div>
 			<div class="flex-none p-5">
-				<label class="flex cursor-pointer gap-2">
-					<span class="label-text">Dark</span>
-					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme" class="toggle theme-controller"/>
-					<span class="label-text">Light</span>
+				<label class="swap swap-rotate">
+					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme" class="theme-controller"/>
+					<span class="iconify carbon--moon text-2xl swap-off"></span>
+					<span class="iconify carbon--sun text-2xl swap-on"></span>
 				</label>
 			</div>
 		</div>
