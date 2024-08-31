@@ -11,6 +11,12 @@ import (
 	"strconv"
 )
 
+const (
+	warningAttemptedWrongCredentials = "WARN: Attempted login with wrong credentials"
+	errorStringFormat                = "ERROR: %+v\n"
+	errorMessageInvalidCredentials   = "Invalid credentials"
+)
+
 var adminUsername = os.Getenv("ADMIN_USERNAME")
 var adminPassword = os.Getenv("ADMIN_PASSWORD")
 
@@ -33,19 +39,19 @@ func Authorize(username string, password string, ok bool) (bool, error) {
 func AuthenticateUser(c *gin.Context) {
 	var user data.UserDto
 	if err := c.BindJSON(&user); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusBadRequest, gin.H{"message": err})
 		return
 	}
 	authorized, err := Authorize(user.Username, user.Password, true)
 	if err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
-		logger.Println("WARN: Attempted login with wrong credentials")
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
 		return
 	}
 	user.CreateToken()
@@ -62,7 +68,7 @@ func GetTelemetries(c *gin.Context) {
 func CreateTelemetry(c *gin.Context) {
 	var newTelemetry data.TelemetryDto
 	if err := c.BindJSON(&newTelemetry); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
@@ -80,19 +86,19 @@ func GetExperiences(c *gin.Context) {
 func CreateExperience(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
-		logger.Println("WARN: Attempted login with wrong credentials")
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
 		return
 	}
 
 	var newExperience data.ExperienceDto
 	if err := c.BindJSON(&newExperience); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusBadRequest, gin.H{"message": err})
 		return
 	}
@@ -110,19 +116,19 @@ func GetTechnologies(c *gin.Context) {
 func CreateTechnology(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
 		return
 	}
 	if !authorized {
-		logger.Println("WARN: Attempted login with wrong credentials")
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
 		return
 	}
 
 	var newTechnology data.TechnologyDto
 	if err := c.BindJSON(&newTechnology); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
 	}
 	database.CreateTechnology(newTechnology.ToTechnology())
@@ -132,20 +138,20 @@ func CreateTechnology(c *gin.Context) {
 func DeleteExperience(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
-		logger.Println("WARN: Attempted login with wrong credentials")
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
 		return
 	}
 	experienceId := c.Param("id")
 
 	//convert experienceId to int
 	if convertedId, err := strconv.Atoi(experienceId); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Provided id not a valid integer"})
 	} else {
 		database.DeleteExperience(uint(convertedId))
@@ -156,19 +162,19 @@ func DeleteExperience(c *gin.Context) {
 func UpdateExperience(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	if !authorized {
-		logger.Println("WARN: Attempted login with wrong credentials")
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid credentials"})
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
 		return
 	}
 
 	var experience data.ExperienceDto
 	if err := c.BindJSON(&experience); err != nil {
-		logger.Printf("ERROR: %+v\n", err)
+		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}

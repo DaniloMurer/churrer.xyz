@@ -5,7 +5,6 @@
 <template>
 	<div class="hero bg-base-300 lg:w-max rounded-2xl shadow-2xl">
 		<div class="hero-content flex-col lg:flex-row p-10">
-			<!--    <span class="iconify logos&#45;&#45;kubernetes iconify-color text-9xl"/>-->
 			<div class="avatar placeholder">
 				<div class="bg-secondary text-neutral-content w-36 rounded-full">
 					<span class="text-3xl">Churrer</span>

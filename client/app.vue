@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useThemeStore} from '~/store/theme';
+import {useAuthStore} from "~/store/auth";
 
 const username = ref('');
 const password = ref('');
@@ -19,6 +20,7 @@ const login = function() {
 		body: JSON.stringify(requestBody)
 	}).then((data: any) => {
 		localStorage.setItem('token', data.token)
+		useAuthStore().token = data.token;
 		const loginModal = document.getElementById('loginModal');
 		if (loginModal) {
 			loginModal.close();
@@ -35,9 +37,15 @@ const toggleTheme = function() {
 }
 
 onMounted(() => {
+	useAuthStore().token = localStorage.getItem('token');
 	window.addEventListener('keydown', (e) => {
 		if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'L') {
-			document.getElementById('loginModal').showModal();
+			const token = localStorage.getItem('token');
+			if (token) {
+				navigateTo('/admin');
+			} else {
+				document.getElementById('loginModal').showModal();
+			}
 		}
 	});
 	isWhite.value = localStorage.getItem("isWhite") === 'true';
