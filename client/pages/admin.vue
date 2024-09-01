@@ -1,30 +1,41 @@
 <script setup lang="ts">
 
-import {definePageMeta} from "#imports";
+import {definePageMeta, type Technology, type Experience} from "#imports";
+import { ExperienceDto, TechnologyDto } from "~/common/types";
 
 definePageMeta({
 	middleware: ['auth'],
-})
-
-const experience = ref({
-	company: '',
-	position: '',
-	timeFrame: '',
-	responsibilities: ''
 });
 
-const technology = ref({
-	name: '',
-	experience: '',
-	description: '',
-	logoClass: ''
-});
+const experiences = ref<Experience[]>([]);
+
+const technologies = ref<Technology[]>([]);
+
+const experience = ref<Experience>(new ExperienceDto('', '', '', ''));
+
+const technology = ref<Technology>(new TechnologyDto('', '', '', ''));
 
 let authenticationToken: string | null = '';
 
 onMounted(() => {
 	authenticationToken = localStorage.getItem("token");
-})
+	$fetch('/api/technologies', {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		}
+	}).then((data: any) => {
+		technologies.value = data;
+	});
+	$fetch('/api/experiences', {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		}
+	}).then((data: any) => {
+		experiences.value = data;
+	});
+});
 
 const saveExperience = function() {
 	$fetch('/api/experiences', {
@@ -53,7 +64,36 @@ const saveTechnology = function() {
 
 <template>
 	<h1 class="text-2xl">Welcome to the admin page</h1>
+	<Table :data="technologies" :tableTitle="'Technologies'">
+		<template #table-header>
+			<th>Name</th>
+			<th>Experience</th>
+			<th>Description</th>
+			<th>Logo</th>
+		</template>
 
+		<template #table-row="{item}">
+			<td>{{ item.name }}</td>
+			<td>{{ item.experience }}</td>
+			<td>{{ item.description }}</td>
+			<td>{{ item.logoClass }}</td>
+		</template>
+	</Table>
+	<Table :data="experiences" :tableTitle="'Experiences'">
+		<template #table-header>
+			<th>Company</th>
+			<th>Position</th>
+			<th>TimeFrame</th>
+			<th>Responsibilities</th>
+		</template>
+
+		<template #table-row="{item}">
+			<td>{{ item.company }}</td>
+			<td>{{ item.position }}</td>
+			<td>{{ item.timeFrame }}</td>
+			<td>{{ item.responsibilities }}</td>
+		</template>
+	</Table>
 	<div class="flex flex-col items-center gap-10">
 		<h2 class="font-bold text-4xl">Experience</h2>
 		<div>
