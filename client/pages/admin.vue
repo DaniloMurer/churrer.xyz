@@ -8,16 +8,15 @@ definePageMeta({
 });
 
 const experiences = ref<Experience[]>([]);
-
 const technologies = ref<Technology[]>([]);
-
 const experience = ref<Experience>(new ExperienceDto('', '', '', ''));
-
 const technology = ref<Technology>(new TechnologyDto('', '', '', ''));
 
 let authenticationToken: string | null = '';
+let apiHost: string = '';
 
 onMounted(() => {
+	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
 	authenticationToken = localStorage.getItem("token");
 	$fetch('/api/technologies', {
 		method: 'GET',
@@ -60,6 +59,15 @@ const saveTechnology = function() {
 		body: JSON.stringify(technology.value)
 	})
 }
+
+const deleteTechnology = function(id: number) {
+	$fetch(`${apiHost}/api/technology/${id}`, {
+		method: 'DELETE',
+		headers: {
+			'Authorization': `Basic ${authenticationToken}`
+		}
+	});
+}
 </script>
 
 <template>
@@ -77,6 +85,7 @@ const saveTechnology = function() {
 			<td>{{ item.experience }}</td>
 			<td>{{ item.description }}</td>
 			<td>{{ item.logoClass }}</td>
+			<td><button class="btn btn-error rounded" v-on:click="deleteTechnology(item.id)">Delete</button></td>
 		</template>
 	</Table>
 	<Table :data="experiences" :tableTitle="'Experiences'">

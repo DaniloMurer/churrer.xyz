@@ -6,6 +6,7 @@ export interface Experience {
 }
 
 export interface Technology {
+	id: number,
 	name: string;
 	logoClass: string;
 	experience: string;
@@ -27,12 +28,14 @@ export class ExperienceDto implements Experience {
 }
 
 export class TechnologyDto implements Technology {
+	id: number;
 	name: string;
 	logoClass: string;
 	experience: string;
 	description: string;
 
 	constructor(name: string, logoClass: string, experience: string, description: string) {
+		this.id = 0;
 		this.name = name;
 		this.logoClass = logoClass;
 		this.experience = experience;

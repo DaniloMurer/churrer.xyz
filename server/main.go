@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"server/controller"
 	"server/database"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
@@ -12,6 +13,11 @@ func main() {
 		return
 	}
 	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{"*"},
+		AllowCredentials: true,
+	}))
 	api := router.Group("/api")
 	{
 		api.GET("/telemetry", controller.GetTelemetries)

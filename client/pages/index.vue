@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const showTelemetryAlert = ref(false)
 
+let apiHost: string = '';
 onMounted(async () => {
+	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
 	const hasMetricsPolicySet = localStorage.getItem('metricsPolicy');
 	showTelemetryAlert.value = !hasMetricsPolicySet;
 	console.log(typeof hasMetricsPolicySet);
@@ -32,7 +34,7 @@ const setMetricsPolicy = function (metricsPolicy: boolean): void {
  */
 const sendMetricsData = function () {
 	$fetch('https://hutils.loxal.net/whois').then((whois: any) => {
-		$fetch('/api/telemetry', {
+		$fetch(`${apiHost}/api/telemetry`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
