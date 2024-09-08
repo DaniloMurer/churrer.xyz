@@ -57,6 +57,17 @@ func CreateExperience(experience *data.Experience) {
 	database.Create(experience)
 }
 
+func DeleteExperience(id uint) {
+	logger.Println("Deleting experience entry")
+	database.Delete(&data.Experience{}, id)
+}
+
+func UpdateExperience(experience *data.Experience) {
+	logger.Println("Updating experience entry")
+	database.Save(experience)
+
+}
+
 // GetAllTechnology return all technologies from the database
 func GetAllTechnology() []data.Technology {
 	logger.Println("Retrieving all technologies")
@@ -71,13 +82,12 @@ func CreateTechnology(technology *data.Technology) {
 	database.Create(technology)
 }
 
-func DeleteExperience(id uint) {
-	logger.Println("Deleting experience entry")
-	database.Delete(&data.Experience{}, id)
+func DeleteTechnology(id uint) {
+	logger.Println("Deleting technology")
+	database.Delete(&data.Technology{}, id)
 }
 
-func UpdateExperience(experience *data.Experience) {
-	logger.Println("Updating experience entry")
-	database.Save(experience)
-
+func UpdateTechnology(technology *data.Technology) {
+	logger.Println("Updating technology")
+	database.Save(technology)
 }

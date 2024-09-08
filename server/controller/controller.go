@@ -106,35 +106,6 @@ func CreateExperience(c *gin.Context) {
 	c.JSON(http.StatusCreated, newExperience)
 }
 
-// GetTechnologies handles the get request to retrieve all technologies
-func GetTechnologies(c *gin.Context) {
-	technologies := database.GetAllTechnology()
-	c.JSON(http.StatusOK, technologies)
-}
-
-// CreateTechnology handles the post request to create a new technology
-func CreateTechnology(c *gin.Context) {
-	authorized, err := Authorize(c.Request.BasicAuth())
-	if err != nil {
-		logger.Printf(errorStringFormat, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
-		return
-	}
-	if !authorized {
-		logger.Println(warningAttemptedWrongCredentials)
-		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
-		return
-	}
-
-	var newTechnology data.TechnologyDto
-	if err := c.BindJSON(&newTechnology); err != nil {
-		logger.Printf(errorStringFormat, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
-	}
-	database.CreateTechnology(newTechnology.ToTechnology())
-	c.JSON(http.StatusCreated, newTechnology)
-}
-
 func DeleteExperience(c *gin.Context) {
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
@@ -181,4 +152,81 @@ func UpdateExperience(c *gin.Context) {
 
 	database.UpdateExperience(experience.ToExperience())
 	c.JSON(http.StatusOK, gin.H{"message": experience})
+}
+
+// GetTechnologies handles the get request to retrieve all technologies
+func GetTechnologies(c *gin.Context) {
+	technologies := database.GetAllTechnology()
+	c.JSON(http.StatusOK, technologies)
+}
+
+// CreateTechnology handles the post request to create a new technology
+func CreateTechnology(c *gin.Context) {
+	authorized, err := Authorize(c.Request.BasicAuth())
+	if err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		return
+	}
+	if !authorized {
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
+		return
+	}
+
+	var newTechnology data.TechnologyDto
+	if err := c.BindJSON(&newTechnology); err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+	}
+	database.CreateTechnology(newTechnology.ToTechnology())
+	c.JSON(http.StatusCreated, newTechnology)
+}
+
+func DeleteTechnology(c *gin.Context) {
+	authorized, err := Authorize(c.Request.BasicAuth())
+	if err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	if !authorized {
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
+		return
+	}
+	technologyId := c.Param("id")
+
+	//convert experienceId to int
+	if convertedId, err := strconv.Atoi(technologyId); err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Provided id not a valid integer"})
+	} else {
+		database.DeleteTechnology(uint(convertedId))
+		c.JSON(http.StatusOK, gin.H{"message": "Experience deleted"})
+	}
+}
+
+func UpdateTechnology(c *gin.Context) {
+	authorized, err := Authorize(c.Request.BasicAuth())
+	if err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	if !authorized {
+		logger.Println(warningAttemptedWrongCredentials)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": errorMessageInvalidCredentials})
+		return
+	}
+
+	var technology data.TechnologyDto
+	if err := c.BindJSON(&technology); err != nil {
+		logger.Printf(errorStringFormat, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	database.UpdateTechnology(technology.ToTechnology())
+	c.JSON(http.StatusOK, gin.H{"message": technology})
 }

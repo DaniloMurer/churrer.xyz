@@ -24,6 +24,8 @@ func main() {
 
 		api.GET("/technology", controller.GetTechnologies)
 		api.POST("/technology", controller.CreateTechnology)
+		api.DELETE("/technology/:id", controller.DeleteTechnology)
+		api.PUT("/technology", controller.UpdateTechnology)
 
 		api.POST("/authentication", controller.AuthenticateUser)
 	}
