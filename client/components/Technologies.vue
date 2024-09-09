@@ -1,14 +1,20 @@
 <script setup lang="ts">
 const technologies = ref<Technology[]>([]);
+let apiHost: string = '';
 
-$fetch('/api/technologies', {
-	method: 'GET',
-	headers: {
-		'Accept': 'application/json',
-	}
-}).then((data: any) => {
-	technologies.value = data;
-})
+onMounted(() => {
+	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
+	$fetch<Technology[]>(`${apiHost}/api/technology`, {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		}
+	}).then((data: Technology[]) => {
+		technologies.value = data;
+	});
+});
+
+
 </script>
 
 <template>

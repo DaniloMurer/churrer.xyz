@@ -1,4 +1,5 @@
 export interface Experience {
+	id: number;
 	position: string;
 	company: string;
 	timeFrame: string;
@@ -14,12 +15,14 @@ export interface Technology {
 }
 
 export class ExperienceDto implements Experience {
+	id: number;
 	position: string;
 	company: string;
 	timeFrame: string;
 	responsibilities: string;
 
 	constructor(position: string, company: string, timeFrame: string, responsibilities: string) {
+		this.id = 0;
 		this.position = position;
 		this.company = company;
 		this.timeFrame = timeFrame;

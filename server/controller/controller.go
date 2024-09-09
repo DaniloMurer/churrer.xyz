@@ -184,6 +184,7 @@ func CreateTechnology(c *gin.Context) {
 }
 
 func DeleteTechnology(c *gin.Context) {
+	logger.Println("deleting technology....")
 	authorized, err := Authorize(c.Request.BasicAuth())
 	if err != nil {
 		logger.Printf(errorStringFormat, err)

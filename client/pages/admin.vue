@@ -18,26 +18,26 @@ let apiHost: string = '';
 onMounted(() => {
 	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
 	authenticationToken = localStorage.getItem("token");
-	$fetch('/api/technologies', {
+	$fetch<Technology[]>(`${apiHost}/api/technology`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
 		}
-	}).then((data: any) => {
+	}).then((data: Technology[]) => {
 		technologies.value = data;
 	});
-	$fetch('/api/experiences', {
+	$fetch<Experience[]>(`${apiHost}/api/experience`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
 		}
-	}).then((data: any) => {
+	}).then((data: Experience[]) => {
 		experiences.value = data;
 	});
 });
 
 const saveExperience = function() {
-	$fetch('/api/experiences', {
+	$fetch(`${apiHost}/api/experience`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const saveExperience = function() {
 }
 
 const saveTechnology = function() {
-	$fetch('/api/technologies', {
+	$fetch(`${apiHost}/api/technology`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -67,6 +67,15 @@ const deleteTechnology = function(id: number) {
 			'Authorization': `Basic ${authenticationToken}`
 		}
 	});
+}
+
+const deleteExperience = function(id: number) {
+	$fetch(`${apiHost}/api/experience/${id}`, {
+		method: 'DELETE',
+		headers: {
+			'Authorization': `Basic ${authenticationToken}`
+		}
+	})
 }
 </script>
 
@@ -101,6 +110,7 @@ const deleteTechnology = function(id: number) {
 			<td>{{ item.position }}</td>
 			<td>{{ item.timeFrame }}</td>
 			<td>{{ item.responsibilities }}</td>
+			<td><button class="btn btn-error rounded" @click="deleteExperience(item.id)">Delete</button></td>
 		</template>
 	</Table>
 	<div class="flex flex-col items-center gap-10">

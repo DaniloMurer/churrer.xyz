@@ -1,13 +1,15 @@
 <script setup lang="ts">
 const experiences = ref<Experience[]>([]);
-
+let apiHost: string = '';
 onMounted(() => {
-	$fetch('/api/experiences', {
+	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
+
+	$fetch<Experience[]>(`${apiHost}/api/experience`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
 		}
-	}).then((data: any) => {
+	}).then((data: Experience[]) => {
 		experiences.value = data;
 		console.log(experiences)
 	}).catch((err) => {

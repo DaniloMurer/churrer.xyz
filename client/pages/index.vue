@@ -45,7 +45,7 @@ const sendMetricsData = function () {
 				//we split at '.' so the Z part of the ISO string gets truncated, for quarkus and hibernate reasons
 				'timestamp': new Date().toISOString()
 			}
-		}).then((error) => {
+		}).catch((error) => {
 			console.error('Something went wrong. check backend logs....', error);
 		});
 	}).catch((error) => {

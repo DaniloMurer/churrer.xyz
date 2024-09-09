@@ -13,11 +13,11 @@ func main() {
 		return
 	}
 	router := gin.Default()
-	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{"*"},
-		AllowCredentials: true,
-	}))
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	corsConfig.AllowCredentials = true
+	corsConfig.AllowHeaders = []string{"Content-Type", "Accept", "Authorization", "Origin"}
+	router.Use(cors.New(corsConfig))
 	api := router.Group("/api")
 	{
 		api.GET("/telemetry", controller.GetTelemetries)
