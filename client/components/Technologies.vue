@@ -21,7 +21,7 @@ onMounted(() => {
 	<div class="stats stats-vertical lg:stats-horizontal bg-base-300 p-2">
 		<div class="stat" v-for="technology in technologies">
 			<div class="stat-figure">
-				<span class="iconify iconify-color text-8xl" :class="technology.logoClass"/>
+				<span class="iconify iconify-color text-8xl" :class="technology.logoClass" />
 			</div>
 			<div class="stat-title text-primary text-2xl">{{ technology.name }}</div>
 			<div class="stat-value text-accent">{{ technology.experience }}</div>
@@ -31,6 +31,4 @@ onMounted(() => {
 	<p class="mt-4">Of course there is more, but you can ask me about that personally!</p>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

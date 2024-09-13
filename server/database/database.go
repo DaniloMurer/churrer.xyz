@@ -1,15 +1,18 @@
 package database
 
 import (
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
 	"os"
 	"server/data"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var connectionString = os.Getenv("DB_CONNECTION")
-var database *gorm.DB
+var (
+	connectionString = os.Getenv("DB_CONNECTION")
+	database         *gorm.DB
+)
 
 var logger = log.New(os.Stdout, "[XYZ] - ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
 
@@ -65,7 +68,6 @@ func DeleteExperience(id uint) {
 func UpdateExperience(experience *data.Experience) {
 	logger.Println("Updating experience entry")
 	database.Save(experience)
-
 }
 
 // GetAllTechnology return all technologies from the database

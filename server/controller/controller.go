@@ -2,13 +2,14 @@ package controller
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"os"
 	"server/data"
 	"server/database"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -17,8 +18,10 @@ const (
 	errorMessageInvalidCredentials   = "Invalid credentials"
 )
 
-var adminUsername = os.Getenv("ADMIN_USERNAME")
-var adminPassword = os.Getenv("ADMIN_PASSWORD")
+var (
+	adminUsername = os.Getenv("ADMIN_USERNAME")
+	adminPassword = os.Getenv("ADMIN_PASSWORD")
+)
 
 var logger = log.New(os.Stdout, "[XYZ] - ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
 
@@ -120,7 +123,7 @@ func DeleteExperience(c *gin.Context) {
 	}
 	experienceId := c.Param("id")
 
-	//convert experienceId to int
+	// convert experienceId to int
 	if convertedId, err := strconv.Atoi(experienceId); err != nil {
 		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Provided id not a valid integer"})
@@ -198,7 +201,7 @@ func DeleteTechnology(c *gin.Context) {
 	}
 	technologyId := c.Param("id")
 
-	//convert experienceId to int
+	// convert experienceId to int
 	if convertedId, err := strconv.Atoi(technologyId); err != nil {
 		logger.Printf(errorStringFormat, err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Provided id not a valid integer"})

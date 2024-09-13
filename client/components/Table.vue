@@ -7,12 +7,12 @@ defineProps(['data', 'tableTitle'])
 		<table class="table table-zebra">
 			<thead>
 				<tr>
-					<slot name="table-header"/>
+					<slot name="table-header" />
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="item in data">
-					<slot name="table-row" :item="item"/>
+					<slot name="table-row" :item="item" />
 				</tr>
 			</tbody>
 		</table>

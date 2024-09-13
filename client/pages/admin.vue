@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import {definePageMeta, type Technology, type Experience} from "#imports";
-import { ExperienceDto, TechnologyDto } from "~/common/types";
+import { definePageMeta, type Technology, type Experience } from '#imports';
+import { ExperienceDto, TechnologyDto } from '~/common/types';
 
 definePageMeta({
 	middleware: ['auth'],
@@ -17,7 +17,7 @@ let apiHost: string = '';
 
 onMounted(() => {
 	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
-	authenticationToken = localStorage.getItem("token");
+	authenticationToken = localStorage.getItem('token');
 	$fetch<Technology[]>(`${apiHost}/api/technology`, {
 		method: 'GET',
 		headers: {
@@ -36,7 +36,7 @@ onMounted(() => {
 	});
 });
 
-const saveExperience = function() {
+const saveExperience = function () {
 	$fetch(`${apiHost}/api/experience`, {
 		method: 'POST',
 		headers: {
@@ -48,7 +48,7 @@ const saveExperience = function() {
 	});
 }
 
-const saveTechnology = function() {
+const saveTechnology = function () {
 	$fetch(`${apiHost}/api/technology`, {
 		method: 'POST',
 		headers: {
@@ -60,7 +60,7 @@ const saveTechnology = function() {
 	})
 }
 
-const deleteTechnology = function(id: number) {
+const deleteTechnology = function (id: number) {
 	$fetch(`${apiHost}/api/technology/${id}`, {
 		method: 'DELETE',
 		headers: {
@@ -69,7 +69,7 @@ const deleteTechnology = function(id: number) {
 	});
 }
 
-const deleteExperience = function(id: number) {
+const deleteExperience = function (id: number) {
 	$fetch(`${apiHost}/api/experience/${id}`, {
 		method: 'DELETE',
 		headers: {
@@ -89,7 +89,7 @@ const deleteExperience = function(id: number) {
 			<th>Logo</th>
 		</template>
 
-		<template #table-row="{item}">
+		<template #table-row="{ item }">
 			<td>{{ item.name }}</td>
 			<td>{{ item.experience }}</td>
 			<td>{{ item.description }}</td>
@@ -105,7 +105,7 @@ const deleteExperience = function(id: number) {
 			<th>Responsibilities</th>
 		</template>
 
-		<template #table-row="{item}">
+		<template #table-row="{ item }">
 			<td>{{ item.company }}</td>
 			<td>{{ item.position }}</td>
 			<td>{{ item.timeFrame }}</td>
@@ -119,60 +119,60 @@ const deleteExperience = function(id: number) {
 			<div class="label">
 				<span class="label-text">Company</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="experience.company"/>
+			<input type="text" class="input input-primary" v-model="experience.company" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">Position</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="experience.position"/>
+			<input type="text" class="input input-primary" v-model="experience.position" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">TimeFrame</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="experience.timeFrame"/>
+			<input type="text" class="input input-primary" v-model="experience.timeFrame" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">Responsibilities</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="experience.responsibilities"/>
+			<input type="text" class="input input-primary" v-model="experience.responsibilities" />
 		</div>
 		<button class="btn btn-secondary" v-on:click="saveExperience">Save</button>
 	</div>
-	<hr/>
+	<hr />
 	<div class="flex flex-col items-center gap-10">
 		<h2 class="font-bold text-4xl">Technology</h2>
 		<div>
 			<div class="label">
 				<span class="label-text">Name</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="technology.name"/>
+			<input type="text" class="input input-primary" v-model="technology.name" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">Experience</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="technology.experience"/>
+			<input type="text" class="input input-primary" v-model="technology.experience" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">Description</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="technology.description"/>
+			<input type="text" class="input input-primary" v-model="technology.description" />
 		</div>
 
 		<div>
 			<div class="label">
 				<span class="label-text">Tailwind Logo</span>
 			</div>
-			<input type="text" class="input input-primary" v-model="technology.logoClass"/>
+			<input type="text" class="input input-primary" v-model="technology.logoClass" />
 		</div>
 		<button class="btn btn-secondary" v-on:click="saveTechnology">Save</button>
 	</div>

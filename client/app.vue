@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {useThemeStore} from '~/store/theme';
-import {useAuthStore} from "~/store/auth";
+import { useThemeStore } from '~/store/theme';
+import { useAuthStore } from "~/store/auth";
 
 const username = ref('');
 const password = ref('');
 const isWhite = ref(false);
-const login = function() {
-	const requestBody  = {
+const login = function () {
+	const requestBody = {
 		username: username.value,
 		password: password.value,
 		token: ''
@@ -31,9 +31,9 @@ const login = function() {
 	})
 }
 
-const toggleTheme = function() {
+const toggleTheme = function () {
 	localStorage.setItem("isWhite", String(!isWhite.value));
-	useThemeStore().$patch({isWhite: !isWhite.value});
+	useThemeStore().$patch({ isWhite: !isWhite.value });
 }
 
 onMounted(() => {
@@ -63,7 +63,8 @@ onMounted(() => {
 			</div>
 			<div class="flex-none p-5">
 				<label class="swap swap-rotate">
-					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme" class="theme-controller"/>
+					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme"
+						class="theme-controller" />
 					<span class="iconify carbon--moon text-2xl swap-off"></span>
 					<span class="iconify carbon--sun text-2xl swap-on"></span>
 				</label>
@@ -80,20 +81,20 @@ onMounted(() => {
 						<div class="label">
 							<span class="label-text">Username</span>
 						</div>
-						<input class="input input-primary w-11/12" v-model="username"/>
+						<input class="input input-primary w-11/12" v-model="username" />
 					</div>
 					<div>
 						<div class="label">
 							<span class="label-text">Password</span>
 						</div>
-						<input type="password" class="input input-primary w-11/12" v-model="password"/>
+						<input type="password" class="input input-primary w-11/12" v-model="password" />
 					</div>
 				</div>
 				<button class="btn btn-secondary w-24 float-right mt-16 mr-10" v-on:click="login()">Login</button>
 			</div>
 		</dialog>
-		<NuxtRouteAnnouncer/>
-		<NuxtPage/>
+		<NuxtRouteAnnouncer />
+		<NuxtPage />
 	</div>
 </template>
 <style>

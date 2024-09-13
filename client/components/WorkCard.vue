@@ -12,6 +12,4 @@ const props = defineProps(['title', 'text', 'timeframe', 'company'])
 	</div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

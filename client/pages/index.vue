@@ -55,11 +55,11 @@ const sendMetricsData = function () {
 </script>
 <template>
 	<div class="flex flex-col items-center gap-16">
-		<Hero/>
+		<Hero />
 		<div class="divider">Technologies</div>
-		<Technologies/>
+		<Technologies />
 		<div class="divider">Experience</div>
-		<Experiences/>
+		<Experiences />
 	</div>
 	<div role="alert" class="alert fixed bottom-0 left-0 w-2/6 h-56 m-5" v-if="showTelemetryAlert">
 		<span class="iconify carbon--information text-2xl"></span>
