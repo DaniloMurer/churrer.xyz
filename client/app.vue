@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {useThemeStore} from '~/store/theme';
+import { useThemeStore } from '~/store/theme';
+import { useAuthStore } from "~/store/auth";
 
 const username = ref('');
 const password = ref('');
 const isWhite = ref(false);
-const login = function() {
-	const requestBody  = {
+const login = function () {
+	const requestBody = {
 		username: username.value,
 		password: password.value,
 		token: ''
@@ -19,6 +20,7 @@ const login = function() {
 		body: JSON.stringify(requestBody)
 	}).then((data: any) => {
 		localStorage.setItem('token', data.token)
+		useAuthStore().token = data.token;
 		const loginModal = document.getElementById('loginModal');
 		if (loginModal) {
 			loginModal.close();
@@ -29,15 +31,21 @@ const login = function() {
 	})
 }
 
-const toggleTheme = function() {
+const toggleTheme = function () {
 	localStorage.setItem("isWhite", String(!isWhite.value));
-	useThemeStore().$patch({isWhite: !isWhite.value});
+	useThemeStore().$patch({ isWhite: !isWhite.value });
 }
 
 onMounted(() => {
+	useAuthStore().token = localStorage.getItem('token');
 	window.addEventListener('keydown', (e) => {
-		if (e.ctrlKey && e.altKey && e.key === 'l') {
-			document.getElementById('loginModal').showModal();
+		if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'L') {
+			const token = localStorage.getItem('token');
+			if (token) {
+				navigateTo('/admin');
+			} else {
+				document.getElementById('loginModal').showModal();
+			}
 		}
 	});
 	isWhite.value = localStorage.getItem("isWhite") === 'true';
@@ -50,14 +58,15 @@ onMounted(() => {
 	<div class="p-3 flex flex-col h-lvh gap-16">
 		<div class="navbar bg-base-300 rounded-2xl shadow-2xl">
 			<div class="flex-1">
-				<a class="btn btn-ghost text-xl" href="/">churrer.xyz</a>
-				<a class="btn btn-ghost text-xl" href="/about">about this site</a>
+				<NuxtLink class="btn btn-ghost text-xl" to="/">churrer.xyz</NuxtLink>
+				<NuxtLink class="btn btn-ghost text-xl" to="/about">about this site</NuxtLink>
 			</div>
 			<div class="flex-none p-5">
-				<label class="flex cursor-pointer gap-2">
-					<span class="label-text">Dark</span>
-					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme" class="toggle theme-controller"/>
-					<span class="label-text">Light</span>
+				<label class="swap swap-rotate">
+					<input type="checkbox" value="winter" v-bind:checked="isWhite" v-on:click="toggleTheme"
+						class="theme-controller" />
+					<span class="iconify carbon--moon text-2xl swap-off"></span>
+					<span class="iconify carbon--sun text-2xl swap-on"></span>
 				</label>
 			</div>
 		</div>
@@ -72,20 +81,20 @@ onMounted(() => {
 						<div class="label">
 							<span class="label-text">Username</span>
 						</div>
-						<input class="input input-primary w-11/12" v-model="username"/>
+						<input class="input input-primary w-11/12" v-model="username" />
 					</div>
 					<div>
 						<div class="label">
 							<span class="label-text">Password</span>
 						</div>
-						<input type="password" class="input input-primary w-11/12" v-model="password"/>
+						<input type="password" class="input input-primary w-11/12" v-model="password" />
 					</div>
 				</div>
 				<button class="btn btn-secondary w-24 float-right mt-16 mr-10" v-on:click="login()">Login</button>
 			</div>
 		</dialog>
-		<NuxtRouteAnnouncer/>
-		<NuxtPage/>
+		<NuxtRouteAnnouncer />
+		<NuxtPage />
 	</div>
 </template>
 <style>

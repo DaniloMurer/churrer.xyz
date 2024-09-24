@@ -1,27 +1,27 @@
 <script setup lang="ts">
-interface Technology {
-	name: string;
-	logoClass: string;
-	experience: string;
-	description: string;
-}
 const technologies = ref<Technology[]>([]);
+let apiHost: string = '';
 
-$fetch('/api/technologies', {
-	method: 'GET',
-	headers: {
-		'Accept': 'application/json',
-	}
-}).then((data: any) => {
-	technologies.value = data;
-})
+onMounted(() => {
+	apiHost = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api.churrer.xyz';
+	$fetch<Technology[]>(`${apiHost}/api/technology`, {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		}
+	}).then((data: Technology[]) => {
+		technologies.value = data;
+	});
+});
+
+
 </script>
 
 <template>
-	<div class="stats stats-vertical lg:stats-horizontal bg-base-300 p-2">
+	<div class="stats stats-vertical xl:stats-horizontal bg-base-300 p-2">
 		<div class="stat" v-for="technology in technologies">
 			<div class="stat-figure">
-				<span class="iconify iconify-color text-8xl" :class="technology.logoClass"/>
+				<span class="iconify iconify-color text-8xl" :class="technology.logoClass" />
 			</div>
 			<div class="stat-title text-primary text-2xl">{{ technology.name }}</div>
 			<div class="stat-value text-accent">{{ technology.experience }}</div>
@@ -31,6 +31,4 @@ $fetch('/api/technologies', {
 	<p class="mt-4">Of course there is more, but you can ask me about that personally!</p>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

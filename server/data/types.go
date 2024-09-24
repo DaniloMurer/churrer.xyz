@@ -2,8 +2,9 @@ package data
 
 import (
 	"encoding/base64"
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // Model base struct for database models

@@ -1,15 +1,18 @@
 package database
 
 import (
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
 	"os"
 	"server/data"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var connectionString = os.Getenv("DB_CONNECTION")
-var database *gorm.DB
+var (
+	connectionString = os.Getenv("DB_CONNECTION")
+	database         *gorm.DB
+)
 
 var logger = log.New(os.Stdout, "[XYZ] - ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
 
@@ -57,6 +60,16 @@ func CreateExperience(experience *data.Experience) {
 	database.Create(experience)
 }
 
+func DeleteExperience(id uint) {
+	logger.Println("Deleting experience entry")
+	database.Delete(&data.Experience{}, id)
+}
+
+func UpdateExperience(experience *data.Experience) {
+	logger.Println("Updating experience entry")
+	database.Save(experience)
+}
+
 // GetAllTechnology return all technologies from the database
 func GetAllTechnology() []data.Technology {
 	logger.Println("Retrieving all technologies")
@@ -69,4 +82,14 @@ func GetAllTechnology() []data.Technology {
 func CreateTechnology(technology *data.Technology) {
 	logger.Println("Creating new technology entry")
 	database.Create(technology)
+}
+
+func DeleteTechnology(id uint) {
+	logger.Println("Deleting technology")
+	database.Delete(&data.Technology{}, id)
+}
+
+func UpdateTechnology(technology *data.Technology) {
+	logger.Println("Updating technology")
+	database.Save(technology)
 }
