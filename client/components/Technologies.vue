@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="stats stats-vertical lg:stats-horizontal bg-base-300 p-2">
+	<div class="stats stats-vertical xl:stats-horizontal bg-base-300 p-2">
 		<div class="stat" v-for="technology in technologies">
 			<div class="stat-figure">
 				<span class="iconify iconify-color text-8xl" :class="technology.logoClass" />
